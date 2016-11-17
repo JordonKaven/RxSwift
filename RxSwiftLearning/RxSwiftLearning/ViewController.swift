@@ -13,183 +13,22 @@ class ViewController: UIViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		flatMap()
+//		flatMap()
 //		map()
 //		combineLatest()
 //		filter()
 //		startWith()
-		
-//		example(description: "empty", action: {
-//			let emptySequence: Observable<Int> = .empty()
-//			_ = emptySequence.subscribe({ (event) in
-//				print(event)
-//			})
-//		})
-		
-		
-		
-		
-//		example(description: "never", action: {
-//			let neverSequence: Observable<Int> = .never()
-//			_ = neverSequence.subscribe({ (event) in
-//				print("never sink will never be called")
-//			})
-//		})
-		
-//		example(description: "just", action: {
-//			let neverSequence: Observable<Int> = .just(32)
-//			_ = neverSequence.subscribe({ (event) in
-//				print(event)
-//			})
-//		})
-		
-//		example(description: "sequenceOf", action: {() -> () in
-//			_  =  (0, 1, 2, 3)
-//			
-//		})
-		
-//		example(description: "from", action: {() -> () in
-////			let sequenceOfElements  = [1,2,3,4].asObservable()
-//			
-//		})
-		
-//		example(description: "create", action: {() -> () in
-//			let myJust = { (singleElement: Int) -> Observable<Int> in
-//				return Observable.create{ observer -> Disposable in
-////					observer.onNext(singleElement)
-////					observer.onCompleted()
-//					observer.on(.next(50))
-//					observer.on(.completed)
-//					
-//					return Disposables.create()
-//				}
-//			}
-//			
-//			print(myJust(5))
-//			
-//			_ = myJust(5).subscribe({ (event) in
-//				print(event)
-//			})
-//			
-//			let observer = myJust(5)
-////			_ = observer.subscribe(onNext: { (element) in
-////				print(element)
-////			}, onError: { (error) in
-////				
-////			}, onCompleted: { 
-////				
-////			}, onDisposed: { 
-////				
-////			})
-////			
-////			_ = observer.do(onCompleted:{
-////				
-////			})
-//			
-////			_ = observer.do(onNext: { (ob) in
-////				print(ob)
-////			}, onError: { (error) in
-////				print(error)
-////			}, onCompleted: { 
-////				print("complete")
-////			}, onSubscribe: { 
-////				print("subscribe")
-////			}, onDispose: { 
-////				print("dispose")
-////			})
-//			
-//			_ = observer.do(onCompleted: {
-//				print("subscribed the onCompleted action")
-//			}, onSubscribe: { 
-//				print("subscribed the onSubscrib action")
-//			}, onDispose: { 
-//				print("subscribed the onDispose action")
-//			}).subscribe(onNext: { (element) in
-//				print(element)
-//			}).addDisposableTo(DisposeBag())
-//			
-//			let subject: BehaviorSubject = BehaviorSubject(value: "z")
-////			subject.on(.next("6"))
-////			subject.onNext("6000")
-//			_ = subject.subscribe({ (string) in
-//				print(string)
-//			})
-//
-//			subject.onNext("6000")
-//			
-//			_ = subject.subscribe({ (string) in
-//				print(string)
-//			})
-//			
-////			_ = subject.subscribe(onNext: { (str) in
-////				print(str)
-////			})
-////			
-////			_ = subject.subscribe({ (e) in
-////				print(e)
-////			})
-//			
-////			subject.on(.next("6"))
-//			subject.onNext("6")
-//			
-////			print(subject)
-//			
-//			_ = observer.subscribe(onNext: { (ele) in
-//				
-//			}, onError: { (error) in
-//				
-//			}, onCompleted: { 
-//				
-//			}, onDisposed: { 
-//				
-//			})
-//			
-//		})
-		
-//			.subscribe(onNext: { (element) in
-//				print(element)
-//			})
-		
-//		example(description: "failWith") {
-//			let error = NSError(domain: "test", code:-1, userInfo:nil)
-//			
-//			let errorSequence: Observable<Int> = Observable.error(error)
-//			_ = errorSequence.subscribe({ (event) in
-//				print(event)
-//			})
-//		}
-		
-//		example(description: "deferred", action: {
-//			let deferredSequence: Observable<Int> = Observable.deferred({ () -> Observable<Int> in
-//				print("creating")
-//				return Observable.create({ (observer) -> Disposable in
-//					print("emmiting")
-//					observer.onNext(0)
-//					observer.onNext(1)
-//					observer.onNext(2)
-//					return Disposables.create()
-//				})
-//			})
-//			
-//			print("go")
-//			_ = deferredSequence.subscribe({ (event) in
-//				print(event)
-//			})
-//			
-//			_ = deferredSequence.subscribe({ (event) in
-//				print(event)
-//			})
-//		})
+//		just()
+//		defered()
+//		publishSubject()
+//		behaviorSubject()
+//		doOnAndSubscribe()
+//		never()
+//		createASianal()
 	}
 
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
-	}
-
-	
-	func example(description: String, action: () -> ()) {
-		print("\n--- \(description) example ---")
-		action()
 	}
 	
 //MARK: -- flatMap  return a sink who's closure return another sinkB and then can be subscribe the sinkB directly
@@ -225,15 +64,15 @@ class ViewController: UIViewController {
 	func map() {
 		//this is a unique observer who can be not be subscribed I still don't know why
 		let subject = Variable.init("56").asObservable() as! BehaviorSubject
-		_ = subject.subscribe { (str) in
-			print(str)
+		_ = subject.subscribe { (event) in
+			print(event)
 		}
 		subject.on(.next("5"))
 		
 		_ = subject.map { (str) -> String in
 			return str.appending("4378")
-		}.subscribe { (str) in
-			print(str)
+		}.subscribe { (event) in
+			print(event)
 		}
 		subject.on(.next("55"))
 		
@@ -241,15 +80,15 @@ class ViewController: UIViewController {
 		let beh = BehaviorSubject.init(value: "beha")
 		_ = beh.map { (str) in
 			return str.appending("jfkld")
-		}.subscribe { (ele) in
-			print(ele)
+		}.subscribe { (event) in
+			print(event)
 		}
-		_ = beh.subscribe { (str) in
-			print(str)
+		_ = beh.subscribe { (event) in
+			print(event)
 		}
 		
-		_ = beh.subscribe({ (str) in
-			print("------\(str)")
+		_ = beh.subscribe({ (event) in
+			print("------\(event)")
 		})
 		beh.on(.next("566"))
 	}
@@ -261,8 +100,8 @@ class ViewController: UIViewController {
 		let combinedSubject = Observable.combineLatest(subjectA, subjectB, resultSelector: { (str1, str2) -> String in
 			  return str1.uppercased()
 		})
-		_ = combinedSubject.subscribe { (string) in
-			print(string)
+		_ = combinedSubject.subscribe { (event) in
+			print(event)
 		}
 	}
 //MARK: -- filter  filter elements with a condition
@@ -270,8 +109,8 @@ class ViewController: UIViewController {
 		let subject = BehaviorSubject.init(value: "2478AAA34378")
 		_ = subject.filter { (str) -> Bool in
 			return str.contains("AAA")
-		}.subscribe { (str) in
-			print("the filted string is \(str)")
+		}.subscribe { (event) in
+			print("the filted string is \(event)")
 		}
 	}
 	
@@ -283,6 +122,118 @@ class ViewController: UIViewController {
 		}
 	}
 	
+//MARK: -- just is just a sink who can only be subscribed one element
+	func just() {
+		let just = Observable.just("element")
+		_ = just.subscribe { (event) in
+			print(event)
+		}
+	}
+	
+//MARK: -- from to create a ObservableSequence instance from an array or another ObservableSequence instance
+	func from() {
+		let sequence =  Observable.from([1,2,3])
+		_ = sequence.subscribe({ (event) in
+			print(event)
+		})
+	}
+	
+//MARK: -- defer to create a Observable instance the deferred signal returned when the deferred signal was subscribed
+	func defered() {
+		let deferedSequence = Observable.deferred { () -> Observable<Int> in
+			print("creating")
+			return Observable.create({ (observer) -> Disposable in
+				print("emmiting")
+				observer.onNext(78)
+				observer.onNext(45)
+				return Disposables.create()
+			})
+		}
+		
+		_ = deferedSequence.subscribe { (event) in
+			print(event)
+		}
+	}
+	
+//MARK: -- publishSubject to create a subject who can observer the event when it is subscribed firstly,it is a most usual tool
+	func publishSubject() {
+		let publishSubject = PublishSubject<String>.init()
+		_ = publishSubject.subscribe { (event) in
+			print(event)
+		}
+		publishSubject.onNext("publishSubject1")
+		publishSubject.onNext("publishSubject2")
+		
+		_ = publishSubject.subscribe { (event) in
+			print(event)
+		}
+		publishSubject.onNext("publishSubject3")
+		publishSubject.onNext("publishSubject4")
+		
+	}
+	
+//MARK: -- behaviorSubject to create a subject and when it was subscribed ,it will send the latest signal to the new subscriber,if no,send the default
+	func behaviorSubject() {
+		let behSubject = BehaviorSubject.init(value: "behavior")
+		_ = behSubject.subscribe { (event) in
+			print(event)
+		}
+		behSubject.onNext("behavior1")
+		_ = behSubject.subscribe { (event) in
+			print(event)
+		}
+		behSubject.onNext("behavior2")
+		_ = behSubject.subscribe { (event) in
+			print(event)
+		}
+	}
+	
 
+	func doOnAndSubscribe() {
+		let subject = PublishSubject<String>.init()
+		
+		// notice: publish subject can only be subscribed a result when it is subscribd firstly,
+		// and the function do(::::) need to be subscribed at the end
+		_ = subject.subscribe { (string) in
+			print(string)
+		}
+		_ = subject.do(onNext: { (element) in
+			print(element)
+		}, onError: { (error) in
+			print(error)
+		}, onCompleted: { 
+			print("send completed")
+		}, onSubscribe: { 
+			print("I was subcribed")
+		}, onDispose: { 
+			print("I was disposed")
+		}).subscribe({ (event) in
+			print(event)
+		})
+		
+		subject.onNext("nextElement")
+		subject.onCompleted()
+	}
+	
+//MARK: -- to create a signal who can not subscribed any results
+	func never() {
+		let neverSignal = Observable<String>.never()
+		_ = neverSignal.subscribe { (event) in
+			print("I can never be called so this print will not excute")
+		}
+	}
+	
+//MARK: -- to create a signal (hot signal who can only send element at its inialize)
+	func createASianal() {
+		let signal = Observable<String>.create { (observer) -> Disposable in
+			observer.onNext("element")
+			observer.onCompleted()
+			return Disposables.create()
+		}
+		_ = signal.subscribe(onNext: { (value) in
+			print(value)
+		})
+		
+	}
 }
 
